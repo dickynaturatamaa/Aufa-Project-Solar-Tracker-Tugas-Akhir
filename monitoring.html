@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Monitoring - Smart Tracker Solar Panel</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+
+  <!-- Mobile Header -->
+  <div class="mobile-header d-flex d-md-none justify-content-between align-items-center px-3 py-2 bg-dark text-white">
+    <div class="d-flex align-items-center">
+      <i class="fa-solid fa-solar-panel fa-lg text-warning me-2"></i>
+      <span class="fw-bold fs-6">SolarTracker</span>
+    </div>
+    <span id="esp-status-mobile" class="badge bg-danger">Disconnected</span>
+  </div>
+
+  <div class="d-flex" id="wrapper">
+    <!-- Sidebar Desktop -->
+    <div class="bg-dark text-white p-3 id-sidebar d-none d-md-block" id="sidebar">
+      <div class="d-flex align-items-center mb-4 ps-2">
+        <i class="fa-solid fa-solar-panel fa-2x text-warning me-2"></i>
+        <span class="fs-5 fw-bold">SolarTracker</span>
+      </div>
+      <hr>
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+          <a href="index.html" class="nav-link text-white"><i class="fa-solid fa-house me-2"></i> Menu Utama</a>
+        </li>
+        <li>
+          <a href="monitoring.html" class="nav-link text-white active"><i class="fa-solid fa-chart-line me-2"></i> Monitoring</a>
+        </li>
+        <li>
+          <a href="kontrol.html" class="nav-link text-white"><i class="fa-solid fa-sliders me-2"></i> Kontrol Manual</a>
+        </li>
+        <li>
+          <a href="simulasi.html" class="nav-link text-white"><i class="fa-solid fa-flask me-2"></i> Simulasi</a>
+        </li>
+      </ul>
+      <hr>
+      <div class="small text-muted text-center">
+        Status ESP32: <span id="esp-status" class="badge bg-danger">Disconnected</span>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="flex-grow-1 p-3 p-md-4" id="page-content">
+      <header class="d-flex justify-content-between align-items-center pb-2 pb-md-3 mb-3 mb-md-4 border-bottom">
+        <h2 class="h4 fw-bold mb-0">Monitoring System & ATS</h2>
+        <div class="text-muted small">
+          <i class="fa-solid fa-clock me-1"></i><span id="current-time">--:--:--</span>
+        </div>
+      </header>
+
+      <section class="content-section active">
+        
+        <!-- ROW 1: Sensor Lingkungan & LDR Tracker -->
+        <div class="row g-3 mb-4">
+          <div class="col-12 col-md-4">
+            <div class="card p-3 card-custom h-100">
+              <h6 class="fw-bold text-secondary"><i class="fa-solid fa-droplet text-info me-2"></i>Kelembapan Lingkungan</h6>
+              <div class="d-flex justify-content-between align-items-center mt-3">
+                <span class="fs-3 fw-bold"><span id="mon-humidity">0</span> %</span>
+                <i class="fa-solid fa-temperature-arrow-up text-info fa-2x"></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="card p-3 card-custom h-100">
+              <h6 class="fw-bold text-secondary"><i class="fa-solid fa-sun text-warning me-2"></i>Sensor LDR 1 (Timur)</h6>
+              <div class="d-flex justify-content-between align-items-center mt-3">
+                <span class="fs-3 fw-bold"><span id="mon-ldr-1">0</span> Lux</span>
+                <i class="fa-solid fa-eye text-warning fa-2x"></i>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="card p-3 card-custom h-100">
+              <h6 class="fw-bold text-secondary"><i class="fa-solid fa-sun text-warning me-2"></i>Sensor LDR 2 (Barat)</h6>
+              <div class="d-flex justify-content-between align-items-center mt-3">
+                <span class="fs-3 fw-bold"><span id="mon-ldr-2">0</span> Lux</span>
+                <i class="fa-solid fa-eye text-warning fa-2x"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ROW 2: Solar Panel & Charger (SCC PWM/Murah) -->
+        <div class="row g-3 mb-4">
+          <!-- Input & Output Solar Panel -->
+          <div class="col-12 col-md-6">
+            <div class="card p-3 card-custom h-100 border-start border-4 border-warning">
+              <h5 class="fw-bold"><i class="fa-solid fa-solar-panel text-warning me-2"></i>Solar Panel (Input vs Output)</h5>
+              <hr class="my-2">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between px-0">
+                  <span>Tegangan Input Panel (Voc)</span>
+                  <strong><span id="mon-solar-v-in">0.0</span> V</strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between px-0">
+                  <span>Tegangan Output Panel (Vmp)</span>
+                  <strong><span id="mon-solar-v-out">0.0</span> V</strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between px-0">
+                  <span>Arus Solar Panel</span>
+                  <strong><span id="mon-solar-i">0.0</span> A</strong>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Modul Charger PWM & Aki -->
+          <div class="col-12 col-md-6">
+            <div class="card p-3 card-custom h-100 border-start border-4 border-success">
+              <h5 class="fw-bold"><i class="fa-solid fa-car-battery text-success me-2"></i>Charger (SCC) & Storage Aki</h5>
+              <hr class="my-2">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between px-0">
+                  <span>Input Tegangan Charger</span>
+                  <strong><span id="mon-charger-v-in">0.0</span> V</strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between px-0">
+                  <span>Tegangan Output ke Aki</span>
+                  <strong><span id="mon-bat-v">0.0</span> V</strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between px-0">
+                  <span>Status Pengisian</span>
+                  <span id="mon-charging-status" class="badge bg-secondary">Standby</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ROW 3: PLN & Sistem ATS (Automatic Transfer Switch) -->
+        <div class="row g-3">
+          <div class="col-12 col-md-6">
+            <div class="card p-3 card-custom border-start border-4 border-danger">
+              <h5 class="fw-bold"><i class="fa-solid fa-plug text-danger me-2"></i>Listrik AC PLN (Cadangan)</h5>
+              <hr class="my-2">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between px-0">
+                  <span>Tegangan AC PLN</span>
+                  <strong><span id="mon-pln-v">0</span> V AC</strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between px-0">
+                  <span>Status Listrik PLN</span>
+                  <span id="mon-pln-status" class="badge bg-success">Normal</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="card p-3 card-custom border-start border-4 border-primary">
+              <h5 class="fw-bold"><i class="fa-solid fa-arrows-rotate text-primary me-2"></i>Status Sumber Utama (ATS)</h5>
+              <hr class="my-2">
+              <div class="d-flex justify-content-between align-items-center my-2">
+                <span>Sumber Daya Beban Saat Ini:</span>
+                <span id="mon-ats-source" class="badge bg-primary fs-6">Solar Panel / Aki</span>
+              </div>
+              <small class="text-muted">
+                *Sistem akan otomatis beralih ke PLN jika tegangan Aki drop / Solar Panel tidak menghasilkan daya.
+              </small>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation Mobile -->
+  <nav class="bottom-nav d-flex d-md-none justify-content-around align-items-center bg-dark text-white">
+    <a href="index.html" class="bottom-nav-item">
+      <i class="fa-solid fa-house"></i>
+      <span>Utama</span>
+    </a>
+    <a href="monitoring.html" class="bottom-nav-item active">
+      <i class="fa-solid fa-chart-line"></i>
+      <span>Monitor</span>
+    </a>
+    <a href="kontrol.html" class="bottom-nav-item">
+      <i class="fa-solid fa-sliders"></i>
+      <span>Kontrol</span>
+    </a>
+    <a href="simulasi.html" class="bottom-nav-item">
+      <i class="fa-solid fa-flask"></i>
+      <span>Simulasi</span>
+    </a>
+  </nav>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/bootstrap.bundle.min.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>

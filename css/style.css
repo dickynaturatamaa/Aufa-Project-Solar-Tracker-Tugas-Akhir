@@ -1,0 +1,145 @@
+/* Custom Global Styles */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  overflow-x: hidden;
+  background-color: #f8f9fa;
+}
+
+#wrapper {
+  min-height: 100vh;
+}
+
+/* Sidebar Styling (Desktop/Tablet) */
+.id-sidebar {
+  width: 250px;
+  min-height: 100vh;
+  transition: all 0.3s ease;
+}
+
+.id-sidebar .nav-link {
+  border-radius: 10px;
+  margin-bottom: 6px;
+  transition: all 0.2s ease;
+}
+
+.id-sidebar .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.id-sidebar .nav-link.active {
+  background-color: #0d6efd !important;
+}
+
+/* Card Styling & Hover Effect */
+.card-custom {
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card-custom:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* ==========================================================
+   ANIMASI PERPINDAHAN MENU (FADE & SLIDE UP)
+   ========================================================== */
+.content-section {
+  display: none;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.35s ease-out, transform 0.35s ease-out;
+}
+
+.content-section.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================
+   INSTAGRAM-STYLE BOTTOM NAVIGATION BAR (Khusus Mobile)
+   ========================================================== */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 65px;
+  z-index: 1050;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  background-color: rgba(33, 37, 41, 0.95) !important;
+  
+  /* Menangani iOS Safe Area / Home Bar iPhone (XR - 17 Pro Max) */
+  padding-bottom: env(safe-area-inset-bottom, 10px);
+  height: calc(65px + env(safe-area-inset-bottom, 0px));
+}
+
+.bottom-nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #8e8e93;
+  text-decoration: none;
+  font-size: 0.72rem;
+  font-weight: 500;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.bottom-nav-item i {
+  font-size: 1.25rem;
+  margin-bottom: 3px;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Status Active Tombol Bawah */
+.bottom-nav-item.active {
+  color: #0d6efd !important;
+}
+
+/* Animasi Pop / Scale saat ikon diklik (Mirip Instagram) */
+.bottom-nav-item.active i {
+  transform: scale(1.22);
+}
+
+.bottom-nav-item:active i {
+  transform: scale(0.9);
+}
+
+/* ==========================================================
+   MOBILE MEDIA QUERY ADJUSTMENT
+   ========================================================== */
+@media (max-width: 767.98px) {
+  #page-content {
+    /* Menambah padding-bottom agar konten paling bawah tidak tertutup Bottom Nav */
+    padding-bottom: calc(80px + env(safe-area-inset-bottom, 10px)) !important;
+  }
+  
+  .mobile-header {
+    position: sticky;
+    top: 0;
+    z-index: 1040;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding-top: calc(8px + env(safe-area-inset-top, 0px)) !important;
+  }
+}
+
+/* Efek Lampu Menyala */
+.icon-pulse {
+  animation: bulbGlow 1.5s infinite alternate;
+}
+
+@keyframes bulbGlow {
+  from {
+    filter: drop-shadow(0 0 2px rgba(255, 193, 7, 0.4));
+  }
+  to {
+    filter: drop-shadow(0 0 10px rgba(255, 193, 7, 1));
+  }
+}

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Menu Utama - Smart Tracker Solar Panel</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+
+  <div class="mobile-header d-flex d-md-none justify-content-between align-items-center px-3 py-2 bg-dark text-white">
+    <div class="d-flex align-items-center">
+      <i class="fa-solid fa-solar-panel fa-lg text-warning me-2"></i>
+      <span class="fw-bold fs-6">SolarTracker</span>
+    </div>
+    <span id="esp-status-mobile" class="badge bg-danger">Disconnected</span>
+  </div>
+
+  <div class="d-flex" id="wrapper">
+    <!-- Sidebar Desktop -->
+    <div class="bg-dark text-white p-3 id-sidebar d-none d-md-block" id="sidebar">
+      <div class="d-flex align-items-center mb-4 ps-2">
+        <i class="fa-solid fa-solar-panel fa-2x text-warning me-2"></i>
+        <span class="fs-5 fw-bold">SolarTracker</span>
+      </div>
+      <hr>
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+          <a href="index.html" class="nav-link text-white active"><i class="fa-solid fa-house me-2"></i> Menu Utama</a>
+        </li>
+        <li>
+          <a href="monitoring.html" class="nav-link text-white"><i class="fa-solid fa-chart-line me-2"></i> Monitoring</a>
+        </li>
+        <li>
+          <a href="kontrol.html" class="nav-link text-white"><i class="fa-solid fa-sliders me-2"></i> Kontrol Manual</a>
+        </li>
+        <li>
+          <a href="simulasi.html" class="nav-link text-white"><i class="fa-solid fa-flask me-2"></i> Simulasi</a>
+        </li>
+      </ul>
+      <hr>
+      <div class="small text-muted text-center">
+        Status ESP32: <span id="esp-status" class="badge bg-danger">Disconnected</span>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="flex-grow-1 p-3 p-md-4" id="page-content">
+      <header class="d-flex justify-content-between align-items-center pb-2 pb-md-3 mb-3 mb-md-4 border-bottom">
+        <h2 class="h4 fw-bold mb-0">Menu Utama</h2>
+        <div class="text-muted small">
+          <i class="fa-solid fa-clock me-1"></i><span id="current-time">--:--:--</span>
+        </div>
+      </header>
+
+      <section class="content-section active">
+        <div class="row g-3 mb-4">
+          <div class="col-12 col-md-4">
+            <div class="card card-custom border-primary text-center p-3">
+              <i class="fa-solid fa-sun text-warning fa-3x mb-2 icon-pulse"></i>
+              <h6 class="text-muted">Daya Solar Panel</h6>
+              <h3 class="fw-bold mb-0"><span id="val-solar-power">0</span> W</h3>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="card card-custom border-success text-center p-3">
+              <i class="fa-solid fa-car-battery text-success fa-3x mb-2"></i>
+              <h6 class="text-muted">Kapasitas Aki</h6>
+              <h3 class="fw-bold mb-0"><span id="val-battery-level">0</span> %</h3>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="card card-custom border-danger text-center p-3">
+              <i class="fa-solid fa-lightbulb text-danger fa-3x mb-2"></i>
+              <h6 class="text-muted">Total Beban Lampu</h6>
+              <h3 class="fw-bold mb-0"><span id="val-load-power">0</span> W</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="card p-4 card-custom">
+          <h5 class="card-title"><i class="fa-solid fa-circle-info me-2 text-primary"></i>Ringkasan Sistem</h5>
+          <p class="card-text text-secondary mt-2 mb-0">
+            Sistem penjejak sinar matahari (*smart tracker*) ini mengoptimalkan penyerapan energi matahari untuk mengisi daya aki. Energi dari aki selanjutnya disalurkan untuk mensuplai beban beberapa lampu penerangan.
+          </p>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation Mobile -->
+  <nav class="bottom-nav d-flex d-md-none justify-content-around align-items-center bg-dark text-white">
+    <a href="index.html" class="bottom-nav-item active">
+      <i class="fa-solid fa-house"></i>
+      <span>Utama</span>
+    </a>
+    <a href="monitoring.html" class="bottom-nav-item">
+      <i class="fa-solid fa-chart-line"></i>
+      <span>Monitor</span>
+    </a>
+    <a href="kontrol.html" class="bottom-nav-item">
+      <i class="fa-solid fa-sliders"></i>
+      <span>Kontrol</span>
+    </a>
+    <a href="simulasi.html" class="bottom-nav-item">
+      <i class="fa-solid fa-flask"></i>
+      <span>Simulasi</span>
+    </a>
+  </nav>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/bootstrap.bundle.min.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
